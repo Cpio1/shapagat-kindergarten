@@ -64,21 +64,19 @@ function SeniorScene() {
 const cards = [
   {
     key: "junior" as const,
-    wrap: "bg-white ring-sky/70 rounded-[40px_40px_40px_14px]",
+    wrap: "bg-white ring-sky/70 rounded-[34px_34px_34px_12px]",
     age: "bg-sky text-ink",
     chip: "bg-sky-50 text-sky-deep ring-sky/50",
     scene: <JuniorScene />,
-    deco: <Cloud className="absolute -right-4 -top-5 w-20 drop-shadow-sm sm:w-24" color="#E6F7FD" />,
-    extra: "",
+    deco: <Cloud className="absolute -right-3 -top-4 z-10 w-16 drop-shadow-sm sm:w-20" color="#E6F7FD" />,
   },
   {
     key: "senior" as const,
-    wrap: "bg-white ring-peach/60 rounded-[14px_40px_40px_40px]",
+    wrap: "bg-white ring-peach/60 rounded-[12px_34px_34px_34px]",
     age: "bg-peach text-ink",
     chip: "bg-peach-50 text-peach-deep ring-peach/40",
     scene: <SeniorScene />,
-    deco: <Star className="absolute -right-2 -top-3 w-10 sm:w-12" color="#FFD84D" spin />,
-    extra: "sm:mt-12",
+    deco: <Star className="absolute -right-2 -top-3 z-10 w-9 sm:w-10" color="#FFD84D" spin />,
   },
 ];
 
@@ -89,6 +87,7 @@ export function Groups() {
       id="groups"
       bg="#F3EDFD"
       next="#FFF6D6"
+      pad="pb-12 pt-9 sm:pb-14 sm:pt-12 lg:pb-14 lg:pt-12 short:lg:pt-8"
       decor={
         <>
           <Pencil className="absolute right-[6%] top-12 hidden w-28 rotate-[-18deg] md:block" color="#FFA65C" />
@@ -104,43 +103,42 @@ export function Groups() {
         </>
       }
     >
-      <Heading id="groups" kicker={t.groups.kicker} title={t.groups.title} lead={t.groups.lead} tint="lilac" />
+      <Heading id="groups" kicker={t.groups.kicker} title={t.groups.title} lead={t.groups.lead} tint="lilac" compact />
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 md:gap-8 lg:mt-10">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:mt-7 lg:gap-6 short:lg:mt-5">
         {cards.map((c, i) => {
           const g = t.groups.items[c.key];
           return (
-            <Reveal as="article" key={c.key} delay={i * 100} className={`group relative ${c.extra}`}>
-              <div className={`relative h-full p-3 shadow-[0_18px_40px_-26px_rgba(44,42,74,.45)] ring-2 transition-transform duration-300 ease-out hover:-translate-y-1 sm:p-4 ${c.wrap}`}>
+            <Reveal as="article" key={c.key} delay={i * 100} className="group relative">
+              <div
+                className={`relative grid h-full gap-3 p-2.5 shadow-[0_16px_34px_-26px_rgba(44,42,74,.45)] ring-2 transition-transform duration-300 ease-out hover:-translate-y-1 sm:p-3 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:gap-4 ${c.wrap}`}
+              >
                 {c.deco}
-                <div className="relative overflow-hidden rounded-[30px_30px_30px_10px]">
+                <div className="relative overflow-hidden rounded-[26px_26px_26px_10px]">
                   <PhotoOr
                     photo={site.groupPhotos[c.key]}
                     alt={g.name}
-                    sizes="(min-width: 768px) 45vw, 92vw"
-                    className="aspect-[16/9] sm:aspect-[16/8]"
+                    sizes="(min-width: 1024px) 270px, (min-width: 640px) 45vw, 92vw"
+                    className="aspect-[16/7] sm:aspect-[16/8] lg:aspect-auto lg:h-full lg:min-h-[200px]"
                     fallback={c.scene}
                   />
                   {!site.groupPhotos[c.key] && (
-                    <span className="absolute bottom-2 right-2 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-ink/60">
+                    <span className="absolute bottom-2 right-2 rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-bold text-ink/60">
                       {t.groups.photoSoon}
                     </span>
                   )}
-                  <span
-                    className={`absolute left-3 top-3 flex flex-col items-center rounded-2xl px-3 py-1.5 text-center shadow-md ${c.age}`}
-                    aria-label={`${t.groups.ageLabel}: ${g.age}`}
-                  >
-                    <span className="text-[10px] font-bold text-ink/70">{t.groups.ageLabel}</span>
-                    <span className="text-lg font-black leading-tight sm:text-xl">{g.age}</span>
+                  <span className={`absolute left-2.5 top-2.5 rounded-full px-3 py-1 text-sm font-black leading-tight shadow-md sm:text-[15px] ${c.age}`}>
+                    <span className="sr-only">{t.groups.ageLabel}: </span>
+                    {g.age}
                   </span>
                 </div>
-                <div className="px-2 pb-2 pt-4 sm:px-3">
-                  <h3 className="text-balance text-xl font-black leading-tight text-ink sm:text-[22px]">{g.name}</h3>
-                  <p className="mt-2 text-[14.5px] leading-relaxed text-ink/70 sm:text-[15px]">{g.text}</p>
-                  <p className="mt-4 text-[12px] font-extrabold text-ink/50">{t.groups.directionsLabel}</p>
-                  <ul className="mt-2 flex flex-wrap gap-2">
+                <div className="px-1.5 pb-1.5 sm:px-2 lg:px-0 lg:py-1.5 lg:pr-2">
+                  <h3 className="text-balance text-lg font-black leading-tight text-ink sm:text-xl">{g.name}</h3>
+                  <p className="mt-1.5 text-[14px] leading-snug text-ink/70 sm:text-[14.5px]">{g.text}</p>
+                  <p className="mt-2.5 text-[11.5px] font-extrabold text-ink/50">{t.groups.directionsLabel}</p>
+                  <ul className="mt-1.5 flex flex-wrap gap-1.5">
                     {g.directions.map((d) => (
-                      <li key={d} className={`rounded-full px-3 py-1 text-[13px] font-bold ring-1 ${c.chip}`}>
+                      <li key={d} className={`rounded-full px-2.5 py-0.5 text-[12.5px] font-bold ring-1 ${c.chip}`}>
                         {d}
                       </li>
                     ))}

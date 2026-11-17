@@ -2,6 +2,8 @@
 
 /* Dark Mode полностью отключён: dark:-варианты никогда не срабатывают. */
 @custom-variant dark (&:where(.dark-mode-disabled, .dark-mode-disabled *));
+/* Невысокие окна ноутбуков (1366×768, 1440×900 с панелями браузера). */
+@custom-variant short (@media (max-height: 800px));
 
 @theme {
   --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
@@ -77,5 +79,21 @@ section[id] { scroll-margin-top: var(--header-h); }
     column-gap: 3.5rem;
     row-gap: 1.5rem;
     grid-template-areas: "intro photo" "rest photo";
+  }
+}
+
+/* «О нас»: телефон — текст, фото, карточки, официальное название; компьютер — фото слева, текст и официальное название справа, 4 карточки снизу */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  grid-template-areas: "text" "photo" "features" "official";
+}
+@media (min-width: 1024px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    column-gap: 3rem;
+    row-gap: 1rem;
+    grid-template-areas: "photo text" "photo official" "features features";
   }
 }

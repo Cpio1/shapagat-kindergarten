@@ -9,10 +9,13 @@ export function Section({
   next,
   decor,
   className = "",
+  pad = "pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16",
   children,
 }: {
   id: string;
   bg: string;
+  /** Вертикальные отступы секции (можно сделать компактнее для отдельных разделов). */
+  pad?: string;
   next?: string;
   decor?: React.ReactNode;
   className?: string;
@@ -25,7 +28,7 @@ export function Section({
           {decor}
         </div>
       )}
-      <div className={`mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16 ${className}`}>{children}</div>
+      <div className={`mx-auto max-w-7xl px-4 sm:px-6 ${pad} ${className}`}>{children}</div>
       {next && (
         <div className="absolute inset-x-0 -bottom-px">
           <Wave color={next} />
@@ -54,6 +57,7 @@ export function Heading({
   tint,
   align = "left",
   className = "",
+  compact = false,
 }: {
   id: string;
   kicker: string;
@@ -62,6 +66,8 @@ export function Heading({
   tint: Tint;
   align?: "left" | "center";
   className?: string;
+  /** Чуть меньший заголовок для плотных разделов. */
+  compact?: boolean;
 }) {
   return (
     <Reveal className={`${align === "center" ? "mx-auto text-center" : ""} max-w-2xl ${className}`}>
@@ -69,10 +75,15 @@ export function Heading({
         <span className={`h-2 w-2 rounded-full ${dotTint[tint]}`} />
         {kicker}
       </p>
-      <h2 id={`${id}-title`} className="mt-3 text-balance text-[28px] font-black leading-[1.1] tracking-tight text-ink sm:text-4xl lg:text-[42px]">
+      <h2
+        id={`${id}-title`}
+        className={`text-balance font-black leading-[1.1] tracking-tight text-ink ${
+          compact ? "mt-2 text-[26px] sm:text-[32px] lg:text-[36px] short:lg:text-[32px]" : "mt-3 text-[28px] sm:text-4xl lg:text-[42px]"
+        }`}
+      >
         {title}
       </h2>
-      {lead && <p className="mt-3 text-pretty text-[15px] leading-relaxed text-ink/70 sm:text-base">{lead}</p>}
+      {lead && <p className={`text-pretty text-[15px] leading-relaxed text-ink/70 sm:text-base ${compact ? "mt-2" : "mt-3"}`}>{lead}</p>}
     </Reveal>
   );
 }
